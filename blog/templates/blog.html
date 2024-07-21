@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %} 
+
+{% block title %} Adnan's Blog {% endblock %}
+
+{% block css_files %}
+    <link rel = "stylesheet" href = "{% static 'css-files/post.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css-files/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="welcome">
+    <header>
+        <img src="{% static 'images/adnan1.jpg' %}" alt= "Adnan - The author of this blog">
+        <h2>Adnan's Blog</h2>
+    </header>
+    <p>Hi, this is Adnan, pleased to meet ya</p>
+</section> 
+
+<section id="latest-posts">
+    <h2>My latest thoughts</h2>
+    <ul>
+        {% for post in posts %}
+            {% include 'includes/posticle.html' %}
+        {% endfor %}
+    </ul>
+</section>
+
+<section id="about">
+    <h4>What I do</h4>
+    <p>I love programming and building</p>
+    <p>My goal is to grow as a SOlution's Architect</p>
+</section>
+{% endblock %}

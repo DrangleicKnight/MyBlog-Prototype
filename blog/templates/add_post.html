@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Add Post {% endblock %}
+
+{% block css_files %}
+    <link rel = "stylesheet" href = "{% static 'css-files/add-post.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id = main-section>
+        <h1>Add Post</h1>
+        <form method = "POST" enctype="multipart/form-data"> {% csrf_token %}
+            {% for field in form %}
+                <div class = "form-control">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            <button>Submit</button>
+        </form>
+    </section>
+
+{% endblock %}

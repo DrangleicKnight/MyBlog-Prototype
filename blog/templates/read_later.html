@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Read Later {% endblock %}
+
+{% block css_files %}
+    <link rel = "stylesheet" href = "{% static 'css-files/post.css' %}">
+    <link rel = "stylesheet" href = "{% static 'css-files/all-posts.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id="all-posts">
+        <h2>Read Later</h2>
+        {% include 'includes/posticle.html' %}
+    </section>
+{% endblock %}

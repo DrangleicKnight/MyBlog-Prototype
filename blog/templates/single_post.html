@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ posted.title }} {% endblock %}
+
+{% block css_files %}
+    <link rel = "stylesheet" href = "{% static 'css-files/post-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if comment_form.errors %}
+        <div id = "alert">
+            <h1>Saving the form failed</h1>
+            <p>Please check if the details are correct</p>
+            <a href = "#comment-form">Fix</a>
+        </div>
+    {% endif %}
+
+    <section id="summary">
+        <h2>{{ posted.title }}</h2>
+        <div>{% for tags in post_tags %}
+                 <span class = "tag">{{ tags }}</span>
+             {% endfor %}
+             <div id = "read-later">
+                 <form method = "POST" style="margin-top : 2%"> {% csrf_token %}
+                     <input type="hidden" name = "post_slug" value="{{ posted.slug }}" >
+                     <button type = "submit">Read Later</button>
+                 </form>
+             </div>
+        </div>
+        <article>
+            <img src = "{{ posted.image.url }}" alt = "{{ posted.title }}">
+            <address>By <a href="mailto:{{ posted.author.email }}">{{posted.author.first_name}}</a></address>
+            <div>
+                Last updated on <time>{{posted.date|date:"d M y"}}</time>
+            </div>
+        </article>
+    </section>
+
+    <main>
+        {{ posted.content | linebreaks }}
+    </main>
+
+    <section id = "comment-form">
+        <h2>Comments</h2>
+        <form method = "POST"> {% csrf_token %}
+            {% for field in comment_form %}
+                <div class = "form-control" {% if field.errors %} invalid {% endif %}>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+            <button>Comment</button>
+        </form>
+    </section>
+
+    <section id = "comments">
+        <h2>Comments</h2>
+        {% for comment in comments %}
+            <l1>
+                <h1>{{ comment.user_name }}</h1>
+                <p>{{ comment.comment | linebreaks }}</p>
+            </l1>
+        {% endfor %}
+    </section>
+
+{% endblock %}
